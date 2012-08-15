@@ -1,0 +1,142 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\begin{document}
+<<setup, echo=FALSE>>=
+opts_chunk$set(fig.align='center', fig.show='as.is', fig.width=6, fig.height=4,
+               message=FALSE, comment="", tidy=TRUE, echo=FALSE, results='asis')
+@
+
+\title{Tuberculosis Screening by Tuberculosis Skin Test or QuantiFERON-TB Gold In-Tube Assay among an Immigrant Population with a High Prevalence of Tuberculosis and BCG Vaccination}
+\author{John Painter and TBESC: Task Order 20}
+\maketitle
+\tableofcontents          
+\listoffigures  
+
+\section{Introduction}
+\subsection{Diagnostic Tools}
+Timeline highlighting introduction of important TB diagnostics:
+
+<<>>=
+read_chunk("timeline.R")
+@
+
+<<timeline, fig.height=3, fig.width=6, fig.cap="Advances in Biologics and Diagnostic Tests for Tuberculosis">>=
+@
+
+\section{Data Management}
+<<>>=
+read_chunk("Data.R")
+@
+<<data>>=
+@
+
+\subsection{Participants}
+We enrolled \Sexpr{nrow(to20)} participants age 15 years and older.  While \Sexpr{nrow(to20.sas) - nrow(to20)} children 2-14 years were initially enrolled, we excluded them from the remaining analysis.
+
+\subsection{TB Status}
+Partipants were enrolled into one of three groups:
+<<TB-groups, results='asis'>>=
+@
+
+\subsection{Age}
+The median ages, by TB-group, were:
+<<Ages, results='asis'>>=
+@
+
+\section{Cho Ray visa applicants}
+<<>>=
+read_chunk("ChoRay Summary.R")
+@
+<<ChoRaySummary>>=
+@
+\subsection{TB status}
+During the enrollment period, the population of visa applicants, by TB-group, was:
+<<CR-Ages>>=
+@
+
+\subsection{Age distribution}
+Histogram of visa applicants by 5-yr age group.
+<<CR-histogram>>=
+@
+
+<<CR-percents>>=
+@
+
+\subsection{Association of Age with TB status}
+The proportion of applicants with an abnormal chest radiogrpah (TB-CXR) increased with age.
+\footnote{
+Annual percent change (APC) was calculated as: ( exp(coef/5)-1 ) * 100
+}
+The model fit was:
+<<CR-CXR>>=
+@
+
+Similarly, the proportion of applicants with culture-confirmed tuberculosis increased with age.
+
+<<CR-MTB>>=
+@
+
+\section{MTB and NTM Cultures}
+<<>>=
+read_chunk("MTB NTM Cultures.R")
+@
+<<cultures, size="footnotesize">>=
+@
+\subsection{MTB: comparison of QFT and TST response}
+<<MTB, warning=FALSE>>=
+@
+\subsection{NTM: comparison of QFT and TST response}
+<<NTM, warning=FALSE>>=
+@
+
+
+\section{Sensitivity}
+<<>>=
+# read_chunk("sensitivity test.R")
+@
+<<SensitivityTest, eval=FALSE>>=
+@
+
+\section{TST versus QFT response}
+
+
+\subsection{Venn Diagram}
+<<tidy=FALSE>>=
+read_chunk("venn.R")
+@
+<<venn, eval=FALSE>>=
+@
+
+\subsection{Dot Plot}
+<<>>=
+read_chunk("Chart Percent Pos.R")
+@
+<<figure3, eval=FALSE>>=
+@
+
+
+\section{Annual Percent Change}
+<<>>=
+read_chunk("APC.R")
+@
+<<APC, eval=FALSE>>=
+
+@
+
+\section{Population Estimate}
+\subsection{SAS}
+<<tidy=FALSE>>=
+read_chunk("Survey Freq.R")
+@
+<<SurveyFreq, eval=FALSE>>=
+@
+
+\subsection{Lumley}
+<<tidy=FALSE>>=
+read_chunk("SAS SurveyFreq.R")
+@
+<<SASSurveyFreq, eval=FALSE>>=
+@
+
+
+\end{document}
