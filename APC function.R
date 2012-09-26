@@ -1,6 +1,6 @@
 
 
-apc <- function (group=1, test="QFT", start=start) {
+apc <- function (group=1, test="QFT", start=c(-1.6, 0.1)) {
   
 
   data<- subset(to20, as.numeric(TB)==group )
@@ -20,7 +20,7 @@ apc <- function (group=1, test="QFT", start=start) {
                             apc.ul= (exp(confint(glm.mod)[2,2]/5)-1 ) *100 ,
                             p= summary(glm.mod)$coefficients[2,4]
                             )
-  
+
   # Fitted values
   #   Mean value when x=mean(age)
   newdata<- data.frame( age.5yr = mean(as.numeric(data$age.5yr)) )
@@ -35,3 +35,27 @@ apc <- function (group=1, test="QFT", start=start) {
 
 # x<-apc()
 # x
+
+apc.glm <- function (group=1, test="QFT", start=c(-1.6, 0.1)) {
+  
+  
+  data<- subset(to20, as.numeric(TB)==group )
+  test.var<-data[,test]
+  glm.mod<- glm( test.var~as.numeric(age.5yr), family=quasibinomial(link="log"), 
+                 data=data,                  
+                 ## starting values set to values modeled for QFT, normal-CXR (TB=1)
+                 start=c(-1.6, 0.1)
+  )
+  # summary 
+  summary(glm.mod)
+  return(glm.mod)
+}
+
+# test
+gmod = apc.glm(group=1, test="TST5", start=c(-.5,.03) )
+apc.frame<- data.frame( group= 1, test="TST5" , 
+                        apc= (exp(coef(gmod)[2]/5)-1 ) *100  ,
+                        apc.ll= (exp(confint(gmod)[2,1]/5)-1 ) *100 ,
+                        apc.ul= (exp(confint(gmod)[2,2]/5)-1 ) *100 ,
+                        p= summary(gmod)$coefficients[2,4]
+)

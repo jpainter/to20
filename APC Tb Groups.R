@@ -2,7 +2,7 @@
 # Calculate apc for each test in each TB group
 
 # TB1: normal CXR
- tb1.tst5.apc<-apc(group=1, test="TST5" )
+tb1.tst5.apc<-apc(group=1, test="TST5", start=c(0,0) )
 tb1.tst10.apc<-apc(group=1, test="TST10")
 tb1.tst15.apc<-apc(group=1, test="TST15")
 tb1.qft.apc<-apc(group=1, test="QFT")
@@ -23,6 +23,10 @@ tb.apc<- rbind(  tb1.tst10.apc, tb1.tst15.apc, tb1.qft.apc,
                 tb2.tst5.apc, tb2.tst10.apc, tb2.tst15.apc, tb2.qft.apc ) #tb1.tst5.apc model did not converge
 row.names(tb.apc) <- NULL    
 tb.apc
+
+###NB.  Because pvalue for slope was not sig (p=.0599), the apc for group=1 tst5 was not automatically calculated.
+#  values were calculated by hand using estimated slope 0.02917 and std.err 0.01547
+# apc was 0.6 (0.0-1.2)
 
 library(ggplot2)
 tb.means<-ddply(to20, .(TB), .fun=function(x){
